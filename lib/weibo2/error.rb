@@ -1,15 +1,16 @@
 module Weibo2
-  class Error < StandardError
-    attr_reader :response, :code, :description
+  class Error < OAuth2::Error
   
-    def initialize(response)
-      response.error = self
-      @response = response
+#    def initialize(response)
+#      super(response)
+#    end
+
+    def set_response_code(response)
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error_code']
         @description = response.parsed['error']
-        super( "#{@description} (#{@code})" )
       end
     end
+
   end
 end
